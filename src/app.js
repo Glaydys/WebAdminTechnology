@@ -5,6 +5,7 @@ import Header from './components/header';
 import Dashboard from './components/dashboard';
 import Products from './views/products';
 import styled from 'styled-components';
+import ReviseProducts from './views/reviseProduct';
 import FormAddProduct from './views/FormAddProduct';
 
 const MainContainer = styled.div`
@@ -27,7 +28,7 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products/>} />
-
+            <Route path="/reviseProduct/:productId" element={<ReviseProducts />} />
             <Route path="/products/FormAddProduct" element={<FormAddProduct/>} />
           </Routes>
         </Content>

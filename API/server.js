@@ -1,39 +1,33 @@
+// server.js
 const express = require('express');
-const { MongoClient } = require('mongodb');
 const cors = require('cors');
-const path = require('path');
-const productRouter = require('./routers/router'); // Adjusted path
-const { default: mongoose } = require('mongoose');
+const { router, upload } = require('./routers/router'); // Nhập router và upload
+const mongoose = require('mongoose');
+const Product = require('./Model/product'); // Nhập mô hình Product nếu chưa làm
+
 const app = express();
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
 
-
 const url = 'mongodb+srv://Nhom07:Nhom07VAA@group07.i8yw5.mongodb.net/technology?retryWrites=true&w=majority&appName=Group07';
-const dbName = 'technology';
 
-let db; 
-
-// Connect to MongoDB
 const connectDB = async () => {
-  const client = new MongoClient(url);
   try {
-    await mongoose.connect(url)
-    // await client.connect();
+    await mongoose.connect(url);
     console.log('Connected to MongoDB');
-    db = client.db(dbName);
   } catch (error) {
     console.error('MongoDB connection error:', error);
-    process.exit(1); 
+    process.exit(1);
   }
 };
 
+// Sử dụng router
+app.use('/products', router); // Sử dụng router đã được nhập
 
-//get all products
+// GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {
   try {
-    const productsCollection = db.collection('product');
-    const products = await productsCollection.find().toArray();
+    const products = await Product.find(); // Sử dụng mongoose để tìm tất cả sản phẩm
     res.json(products);
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -41,14 +35,57 @@ app.get('/products', async (req, res) => {
   }
 });
 
+// GET: Lấy sản phẩm theo ID
+app.get('/products/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const product = await Product.findOne({ product_id: productId });
+    
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// su dung router
-app.use('/products', productRouter);
+// PUT: Cập nhật thông tin sản phẩm
+app.put('/products/:id', upload.single('image_product'), async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updatedProduct = {
+      product_id: req.body.product_id,
+      category_id: req.body.category_id,
+      name_product: req.body.name_product,
+      description: req.body.description,
+      price: Number(req.body.price),
+      quantity: Number(req.body.quantity),
+    };
 
+    if (req.file) {
+      updatedProduct.image_product = `/uploads/${req.file.filename}`;
+    }
 
+    const result = await Product.updateOne(
+      { product_id: productId },
+      { $set: updatedProduct }
+    );
 
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: 'Product updated successfully' });
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// Start the server and connect to MongoDB
+// Bắt đầu server
 const startServer = async () => {
   await connectDB();
   app.listen(3003, () => {
@@ -56,4 +93,4 @@ const startServer = async () => {
   });
 };
 
-startServer(); 
+startServer();

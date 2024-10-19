@@ -53,7 +53,7 @@ const Products = () => {
                 <img src={`${product.image_product}`} alt={product.name_product} style={{ width: '100px' }} />
               </td>
               <td>
-                <button>Revise</button>
+              <button onClick={() => navigate(`/reviseProduct/${product.product_id}`)}>Revise</button>
               </td>
               <td>
                 <button>Delete</button>
