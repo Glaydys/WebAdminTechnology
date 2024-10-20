@@ -4,6 +4,7 @@ const cors = require('cors');
 const { router, upload } = require('./routers/router'); // Nhập router và upload
 const mongoose = require('mongoose');
 const Product = require('./Model/product'); // Nhập mô hình Product nếu chưa làm
+const Category = require('./Model/category');
 
 const app = express();
 app.use(cors());
@@ -82,6 +83,17 @@ app.put('/products/:id', upload.single('image_product'), async (req, res) => {
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).json({ message: error.message });
+  }
+});
+
+//get category
+app.get('/categories', async (req, res) => {
+  try {
+    const categories = await Category.find()
+    res.json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Something went wrong' });
   }
 });
 

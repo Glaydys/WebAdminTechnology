@@ -32,6 +32,7 @@ const Products = () => {
             <th>Name product</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Description</th>
             <th>Image</th>
             <th>Revise</th>
             <th>Delete</th>
@@ -49,6 +50,7 @@ const Products = () => {
                   : 'Price not available'}
               </td>
               <td>{product.quantity}</td>
+              <td>{product.description}</td>
               <td>
                 <img src={`${product.image_product}`} alt={product.name_product} style={{ width: '100px' }} />
               </td>
