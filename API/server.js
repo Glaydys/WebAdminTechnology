@@ -86,6 +86,25 @@ app.put('/products/:id', upload.single('image_product'), async (req, res) => {
   }
 });
 
+// API để xóa sản phẩm theo product_id
+app.delete('/products/:productId', async (req, res) => {
+  const { productId } = req.params;  // Lấy productId từ URL
+  
+  try {
+    // Sử dụng mô hình Product để tìm và xóa sản phẩm
+    const result = await Product.findOneAndDelete({ product_id: productId });
+
+    if (!result) {
+      return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+    }
+    
+    res.status(200).json({ message: 'Sản phẩm đã được xóa thành công' });
+  } catch (error) {
+    console.error('Lỗi khi xóa sản phẩm:', error);
+    res.status(500).json({ message: 'Lỗi khi xóa sản phẩm', error });
+  }
+});
+
 //get category
 app.get('/categories', async (req, res) => {
   try {
