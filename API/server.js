@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const { router, upload } = require('./routers/router'); // Nhập router và upload
+const { user_router } = require('./routers/user');
 const mongoose = require('mongoose');
 const Product = require('./Model/product'); // Nhập mô hình Product nếu chưa làm
 const Category = require('./Model/category');
@@ -24,6 +25,7 @@ const connectDB = async () => {
 
 // Sử dụng router
 app.use('/products', router); // Sử dụng router đã được nhập
+app.use('/user', user_router);
 
 // GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {
