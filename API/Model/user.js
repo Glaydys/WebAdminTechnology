@@ -14,7 +14,9 @@ const UserSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true
-    }
+    },
+    createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 },{timestamps: true})
 
 let User = mongoose.model('user',UserSchema,'user')
