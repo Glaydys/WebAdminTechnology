@@ -31,6 +31,7 @@ const Sidebar = () => {
       <SidebarItem to="/products">Products</SidebarItem>
       <SidebarItem to="/orders">Orders</SidebarItem>
       <SidebarItem to="/users">Users</SidebarItem>
+      <SidebarItem to="/categories">Category</SidebarItem>
     </SidebarContainer>
   );
 };

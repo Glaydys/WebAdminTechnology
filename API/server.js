@@ -88,7 +88,6 @@ app.put('/products/:id', upload.single('image_product'), async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 // API để xóa sản phẩm theo product_id
 app.delete('/products/:productId', async (req, res) => {
   const { productId } = req.params;  // Lấy productId từ URL

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import ReviseProducts from './views/reviseProduct';
 import FormAddProduct from './views/FormAddProduct';
 import Users from './views/UsersList';
+import Category from './views/category';
 
 const MainContainer = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ function App() {
             <Route path="/products" element={<Products/>} />
             <Route path="/reviseProduct/:productId" element={<ReviseProducts />} />
             <Route path="/products/FormAddProduct" element={<FormAddProduct/>} />
+            <Route path="/categories" element={<Category/>} />
           </Routes>
         </Content>
       </MainContainer>
