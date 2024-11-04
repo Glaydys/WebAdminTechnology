@@ -25,7 +25,6 @@ const connectDB = async () => {
 };
 
 // Sử dụng router
-app.use('/products', router); // Sử dụng router đã được nhập
 app.use('/user', user_router);
 
 // GET: Lấy tất cả sản phẩm
@@ -57,7 +56,7 @@ app.get('/products/:id', async (req, res) => {
 });
 
 // PUT: Cập nhật thông tin sản phẩm
-app.put('/products/:id', upload.single('image_product'), async (req, res) => {
+app.put('/products/:id', upload.array('image_product',5), async (req, res) => {
   try {
     const productId = req.params.id;
     const updatedProduct = {
