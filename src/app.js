@@ -10,6 +10,7 @@ import FormAddProduct from './views/FormAddProduct';
 import Users from './views/UsersList';
 import Category from './views/category';
 import FormAddCategory from './views/FormAddCategory';
+import ReviseCategory from './views/reviseCategory';
 
 const MainContainer = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ function App() {
             <Route path="/reviseProduct/:productId" element={<ReviseProducts />} />
             <Route path="/products/FormAddProduct" element={<FormAddProduct/>} />
             <Route path="/categories" element={<Category/>} />
+            <Route path="/reviseCategory/:categoryId" element={<ReviseCategory />} />
             <Route path="/categories/FormAddCategory" element={<FormAddCategory/>} />
           </Routes>
         </Content>
