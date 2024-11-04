@@ -19,6 +19,16 @@ const Category = () => {
         fetchCategory();
     }, []);
 
+    const handleDelete = async (categoryId) => {
+        try {
+            await axios.delete(`http://localhost:3003/categories/${categoryId}`);
+          setCategory(category.filter(cat => cat.category_id !== categoryId));
+          alert('Danh mục đã được xóa thành công');
+        } catch (error) {
+          console.error('Error deleting category:', error);
+          alert('Có lỗi xảy ra khi xóa danh mục');
+        }
+      };
 
     return (
         <div>
@@ -44,7 +54,7 @@ const Category = () => {
                         <button onClick={() => navigate(`/reviseCategory/${category.category_id}`)}>Revise</button>
               </td>
               <td>
-                <button>Delete</button>
+                <button onClick={() => handleDelete(category.category_id)}>Delete</button>
               </td>
                 </tr>
             ))}
