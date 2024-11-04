@@ -41,7 +41,7 @@ const Category = () => {
                         <td>{category.name_category}</td>   
                         <td><img src={`${category.image_category}`} alt={category.name_category} style={{ width: '100px' }} /></td>                                                    
                         <td>
-              <button>Revise</button>
+                        <button onClick={() => navigate(`/reviseCategory/${category.category_id}`)}>Revise</button>
               </td>
               <td>
                 <button>Delete</button>

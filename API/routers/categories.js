@@ -41,6 +41,49 @@ app.post('/add', upload.single('image_category'), async (req,res)=>{
         res.status(500).json(error)
     }
 })
-  
+// Lấy danh mục theo category_id
+app.get('/:category_id', async (req, res) => {
+  const categoryId = parseInt(req.params.category_id, 10);
+  try {
+    const category = await Category.findOne({ category_id: categoryId });
+    if (category) {
+      res.status(200).json(category);
+    } else {
+      res.status(404).json({ error: 'Danh mục không tồn tại' });
+    }
+  } catch (error) {
+    console.error('Lỗi khi tải danh mục:', error);
+    res.status(500).json({ error: 'Lỗi khi tải danh mục' });
+  }
+});
+
+// Cập nhật thông tin danh mục theo category_id
+app.put('/:category_id', upload.single('image_category'), async (req, res) => {
+  const categoryId = parseInt(req.params.category_id, 10);
+  const updatedCategory = {
+    name_category: req.body.name_category,
+  };
+
+  if (req.file) {
+    updatedCategory.image_category = '/uploads/' + req.file.filename; 
+  }
+
+  try {
+    const result = await Category.updateOne(
+      { category_id: categoryId },
+      { $set: updatedCategory }
+    );
+
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: 'Danh mục đã được cập nhật thành công' });
+    } else {
+      res.status(404).json({ error: 'Danh mục không tồn tại hoặc không có thay đổi nào' });
+    }
+  } catch (error) {
+    console.error('Lỗi khi cập nhật danh mục:', error);
+    res.status(500).json({ message: 'Đã xảy ra lỗi khi cập nhật danh mục' });
+  }
+});
+
 
 module.exports = app
