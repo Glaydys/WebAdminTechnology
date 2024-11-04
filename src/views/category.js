@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import './products.css';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Category = () => {
     const [category, setCategory] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchCategory = async () => {
@@ -20,7 +22,7 @@ const Category = () => {
 
     return (
         <div>
-        <button>Add</button> {/* Gọi hàm handleAddProduct */}
+        <button onClick={()=> navigate("/categories/FormAddCategory")}>Add</button> {/* Gọi hàm handleAddProduct */}
             <h2>Category Management</h2>
             <table>
                 <thead>
@@ -37,8 +39,7 @@ const Category = () => {
                         <tr key={category.category_id}>
                         <td>{category.category_id}</td>
                         <td>{category.name_category}</td>   
-                        <td>
-                      </td>                                                 
+                        <td><img src={`${category.image_category}`} alt={category.name_category} style={{ width: '100px' }} /></td>                                                    
                         <td>
               <button>Revise</button>
               </td>
