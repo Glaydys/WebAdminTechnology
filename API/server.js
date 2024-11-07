@@ -27,6 +27,7 @@ const connectDB = async () => {
 // Sử dụng router
 app.use('/user', user_router);
 app.use('/categories', categoryRouter)
+app.use('/products', router)
 
 // GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {
