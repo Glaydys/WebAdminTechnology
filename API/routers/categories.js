@@ -85,5 +85,21 @@ app.put('/:category_id', upload.single('image_category'), async (req, res) => {
   }
 });
 
+//route xóa
+app.delete('/:category_id', async (req, res) => {
+  const { category_id } = req.params;
+  try {
+    // Tìm và xóa category theo category_id
+    const deletedCategory = await Category.findOneAndDelete({ category_id: parseInt(category_id, 10) });
+    if (!deletedCategory) {
+      return res.status(404).json({ message: 'Danh mục không tồn tại' });
+    }
+    res.status(200).json({ message: 'Danh mục đã được xóa thành công' });
+  } catch (error) {
+    console.error('Lỗi khi xóa danh mục:', error);
+    res.status(500).json({ message: 'Lỗi khi xóa danh mục' });
+  }
+});
+
 
 module.exports = app
