@@ -1,8 +1,8 @@
-// router.js
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const Product = require('../Model/product.js');
+
 
 const router = express.Router();
 
@@ -66,6 +66,21 @@ router.delete('/:productId', async (req, res) => {
   } catch (error) {
       console.error('Error deleting product:', error);
       res.status(500).json({ message: 'Lỗi khi xóa sản phẩm', error });
+  }
+});
+router.get('/category/:category_id', async (req, res) => {
+  try {
+    const category_id = req.params.category_id;
+
+    const products = await Product.find({ category_id: category_id });
+
+    if (products.length > 0) {
+      res.status(200).json(products);
+    } else {
+      res.status(404).json({ message: 'Không tìm thấy sản phẩm cho danh mục này' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Lỗi khi lấy sản phẩm theo danh mục', details: err });
   }
 });
 

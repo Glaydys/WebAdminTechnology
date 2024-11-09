@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Product = require('./Model/product'); 
 const Category = require('./Model/category');
 const user_router = require('./routers/user');
+const cart_router = require('./routers/cart')
 
 const app = express();
 app.use(cors());
@@ -32,13 +33,14 @@ app.use('/products', router)
 // GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {
   try {
-    const products = await Product.find(); // Sử dụng mongoose để tìm tất cả sản phẩm
+    const products = await Product.find(); 
     res.json(products);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
+
 
 // GET: Lấy sản phẩm theo ID
 app.get('/products/:id', async (req, res) => {
