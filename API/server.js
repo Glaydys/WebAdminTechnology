@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const Product = require('./Model/product'); 
 const Category = require('./Model/category');
 const user_router = require('./routers/user');
-const cart_router = require('./routers/cart')
 
 const app = express();
 app.use(cors());
