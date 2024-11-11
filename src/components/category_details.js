@@ -2,7 +2,6 @@ import axios from 'axios';
 import './Category.css'; // Updated CSS file with new class names
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Grid } from '@mui/material';
 
 function Product() {
     const [products, setProducts] = useState([]);
@@ -26,24 +25,21 @@ function Product() {
     }, [category_id]);
 
     return (
-        <div>
-            <div >
-                {products.length > 0 && 
-                    products.map((product) => (
-                        <Grid key={product.product_id} onClick={() => navigate(`/products/${product.product_id}`)} style={{ cursor: 'pointer' }}>
-                            <div >
-                                <img
-                                    src={product.image_product} 
-                                    alt={product.name_product}
-                                />
-                                <p>{product.name_product}</p>
-                                <p >${product.price}</p>
-                                <button>Add to Cart</button>
-                            </div>
-                        </Grid>
-                    ))
-                }
-            </div>
+        <div className="product-grid">
+            {products.length > 0 && 
+                products.map((product) => (
+                    <div key={product.product_id} className="product-container" onClick={() => navigate(`/products/${product.product_id}`)}>
+                        <img
+                            src={product.image_product} 
+                            alt={product.name_product}
+                            className="product-image"
+                        />
+                        <p className="product-name">{product.name_product}</p>
+                        <p className="product-price">${product.price}</p>
+                        <button className="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                ))
+            }
         </div>
     );
 }

@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Benefit from '../components/Benefit';
 import Category from '../components/Category';
+import category_details from '../components/category_details';
 
 function HomePage() {
   return (
@@ -11,6 +12,7 @@ function HomePage() {
       <Navbar />
    <Header/>
    <Category/>
+   <category_details/>
       <Benefit />
       <Footer />
     </div>

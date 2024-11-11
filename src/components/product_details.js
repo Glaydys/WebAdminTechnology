@@ -25,23 +25,22 @@ function Productdetails() {
     }, [id]);
 
     return (
-        <div >
+        <div className="product-details-container">
             {product && (  
-                <Stack spacing={3} style={{ cursor: 'pointer' }}>
-                <img
-            
-                src={product.image_product} 
-                alt={product.name_product}
-            />
+                <Stack spacing={3}>
+                    <img
+                        src={product.image_product} 
+                        alt={product.name_product}
+                    />
                     <Stack>
-                        <p >{product.name_product}</p>
-                        <p >${product.price}</p>
-                        <p >{product.description}</p>
+                        <p className="product-name">{product.name_product}</p>
+                        <p className="product-price">${product.price}</p>
+                        <p className="product-description">{product.description}</p>
                     </Stack>
                 </Stack>
             )}
         </div>
     );
+    
 }
-
 export default Productdetails;
