@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Product = require('./Model/product'); 
 const Category = require('./Model/category');
 const user_router = require('./routers/user');
+const cart_router = require('./routers/cart');
 
 const app = express();
 app.use(cors());
@@ -28,6 +29,7 @@ const connectDB = async () => {
 app.use('/user', user_router);
 app.use('/categories', categoryRouter)
 app.use('/products', router)
+app.use('/carts',cart_router ) //giỏ hàng
 
 // GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {
@@ -39,7 +41,6 @@ app.get('/products', async (req, res) => {
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
-
 
 // GET: Lấy sản phẩm theo ID
 app.get('/products/:id', async (req, res) => {
@@ -90,7 +91,7 @@ app.put('/products/:id', upload.array('image_product',5), async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-// API để xóa sản phẩm theo product_id
+
 app.delete('/products/:productId', async (req, res) => {
   const { productId } = req.params;  // Lấy productId từ URL
   
