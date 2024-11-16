@@ -54,30 +54,5 @@ router.post('/add', async (req,res)=>{
     }
 })
 
-router.get('/get', async (req,res)=>{
-    const {productId} = req.body
-    try {
-        const getdanhgia = await Rate.findById(productId).populate()
-        if (!getdanhgia) {
-            return res.status(404).json({ message: "Product not found" });
-        }
-
-        const { users } = getdanhgia;
-        // su dung reduce de tinh tong rate
-        const totalRates = users.reduce((sum, user) => sum + user.rate, 0);
-        const averageRate = users.length > 0 ? (totalRates / users.length) : 0;
-        const rate_averageRate = averageRate.toFixed(2)
-
-        await Product.findByIdAndUpdate(productId, {rate: rate_averageRate})
-
-        return res.status(200).json({
-            ...getdanhgia._doc,
-            averageRate: averageRate.toFixed(2) // Lấy 2 chữ số thập phân
-        });
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json(error)
-    }
-})
 
 module.exports = router
