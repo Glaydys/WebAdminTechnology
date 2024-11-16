@@ -9,6 +9,8 @@ const productSchema = new mongoose.Schema({
     price: Number,
     quantity: Number,
     image_product: String,
+    rate: Number,
+    totalUserRate: Number,
 });
 
 

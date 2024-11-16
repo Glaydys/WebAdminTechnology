@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
 const Product = require('./Model/product'); 
 const Category = require('./Model/category');
 const user_router = require('./routers/user');
+const rate_router = require('./routers/rating')
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/api', user_router)
 
 const url = 'mongodb+srv://Nhom07:Nhom07VAA@group07.i8yw5.mongodb.net/technology?retryWrites=true&w=majority&appName=Group07';
 
@@ -28,6 +28,7 @@ const connectDB = async () => {
 app.use('/user', user_router);
 app.use('/categories', categoryRouter)
 app.use('/products', router)
+app.use('/rate', rate_router)
 
 // GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {

@@ -19,5 +19,5 @@ const UserSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 },{timestamps: true})
 
-let User = mongoose.model('user',UserSchema,'user')
+let User = mongoose.model('User',UserSchema,'user')
 module.exports = User
