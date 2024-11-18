@@ -31,6 +31,7 @@ app.use('/categories', categoryRouter)
 app.use('/products', router)
 app.use('/carts',cart_router ) //giỏ hàng
 app.use('/rate', rate_router)
+app.use('/api',user_router)
 
 // GET: Lấy tất cả sản phẩm
 app.get('/products', async (req, res) => {
