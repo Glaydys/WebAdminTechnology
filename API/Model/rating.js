@@ -1,24 +1,36 @@
 const mongoose = require('mongoose')
 const rateSchema = new mongoose.Schema({
-    _id:{
+    _id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
-        require: true
+        required: true
     },
     users: [
         {
             userId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
+                required: true,
+                ref: 'User'
+            },
+            comment: {
+                type: String 
             },
             rate: {
-                type: Number,          
+                type: Number, 
+                required: true,
+                min: 1,
+                max: 5
             },
-            createdAt: { type: Date },
-            _id: false,
+            createdAt: {
+                type: Date, 
+                default: Date.now
+            }
         }
     ],
-    rate: Number
-})
+    rate: {
+        type: Number, 
+        default: 0
+    }
+});
 
 exports.Rate = mongoose.model('Rate', rateSchema, 'rates')
