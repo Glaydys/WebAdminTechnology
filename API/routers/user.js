@@ -66,4 +66,41 @@ user_router.delete('/user/:id', async (req, res) => {
     }
 });
 
+user_router.put('/change-password', async (req, res) => {
+    try {
+        console.log('Request received:', req.body);
+        const { username, oldPassword, newPassword } = req.body;
+
+        // Tìm người dùng
+        const user = await User.findOne({ username });
+        if (!user) {
+            console.log('User not found:', username);
+            return res.status(404).json({ message: 'User not found' });
+        }
+        // Kiểm tra mật khẩu cũ
+        const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+        if (!isPasswordCorrect) {
+            console.log('Incorrect old password for user:', username);
+            return res.status(401).json({ message: 'Old password is incorrect' });
+        }
+        // Cập nhật mật khẩu mới
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(newPassword, salt);
+        user.password = hash;
+
+        await user.save();
+        console.log('Password updated for user:', username);
+        res.status(200).json({ message: 'Password changed successfully' });
+    } catch (error) {
+        console.error('Error changing password:', error);
+        res.status(500).json({ message: 'Error changing password', error });
+    }
+});
+
+// Middleware xử lý lỗi
+user_router.use((err, req, res, next) => {
+    console.error('Error:', err.message);
+    res.status(500).json({ error: err.message });
+});
+
 module.exports = user_router;
